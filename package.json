@@ -21,10 +21,14 @@
   "author": "Christopher Brown <io@henrian.com> (http://henrian.com)",
   "license": "MIT",
   "homepage": "https://github.com/chbrown/afm",
-  "dependencies": {},
+  "dependencies": {
+    "base64-arraybuffer": "^0.1.5",
+    "pako": "^1.0.6"
+  },
   "devDependencies": {
     "@types/mz": "^0.0.32",
     "@types/node": "^10.5.1",
+    "@types/pako": "^1.0.0",
     "mz": "^2.7.0",
     "prettier": "^1.15.3",
     "ts-node": "^7.0.1",

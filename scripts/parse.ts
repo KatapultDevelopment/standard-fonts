@@ -1,4 +1,6 @@
+import * as base64 from 'base64-arraybuffer';
 import fs from 'mz/fs';
+import pako from 'pako';
 import { dirname } from 'path';
 
 import { ICharMetrics, parseCharMetricsSection } from './parseCharacterMetrics';
@@ -25,15 +27,29 @@ const getAfmFilePaths = async () => {
   return afmFiles.map((name) => `${parentDir}/font_metrics/${name}`);
 };
 
+const compressJson = (json: string) => {
+  const jsonBytes = json.split('').map((c) => c.charCodeAt(0));
+  const base64DeflatedJson = JSON.stringify(
+    base64.encode(pako.deflate(jsonBytes)),
+  );
+  return base64DeflatedJson;
+};
+
 const main = async () => {
   const afmFiles = await getAfmFilePaths();
+
   for (const afmFile of afmFiles) {
     console.log('Parsing:', afmFile);
     const data = await fs.readFile(afmFile);
+
     const metrics = parseFontMetrics(String(data));
     const jsonMetrics = JSON.stringify(metrics);
+
     const jsonFile = afmFile.replace('.afm', '.json');
+    const compressedJsonFile = afmFile.replace('.afm', '.compressed.json');
+
     await fs.writeFile(jsonFile, jsonMetrics);
+    await fs.writeFile(compressedJsonFile, compressJson(jsonMetrics));
   }
 };
 
