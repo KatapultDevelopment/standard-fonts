@@ -2,6 +2,15 @@
   "name": "afm",
   "version": "0.4.0",
   "description": "Adobe Font Metrics",
+  "scripts": {
+    "parse": "ts-node scripts/parse.ts",
+    "clean": "rm vendor/Adobe/Core14/*.json",
+    "ls": "ls vendor/Adobe/Core14"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/chbrown/afm.git"
+  },
   "keywords": [
     "afm",
     "adobe",
@@ -9,27 +18,18 @@
     "metrics",
     "ascii"
   ],
-  "homepage": "https://github.com/chbrown/afm",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/chbrown/afm.git"
-  },
-  "license": "MIT",
   "author": "Christopher Brown <io@henrian.com> (http://henrian.com)",
+  "license": "MIT",
+  "homepage": "https://github.com/chbrown/afm",
+  "dependencies": {
+  },
   "devDependencies": {
+    "@types/mz": "^0.0.32",
     "@types/node": "^10.5.1",
     "mz": "^2.7.0",
     "prettier": "^1.15.3",
     "ts-node": "^7.0.1",
     "tslint": "^5.12.0",
     "typescript": "^2.9.2"
-  },
-  "scripts": {
-    "parse": "ts-node scripts/parse.ts",
-    "clean": "rm vendor/Adobe/Core14/*.json",
-    "ls": "ls vendor/Adobe/Core14"
-  },
-  "dependencies": {
-    "@types/mz": "^0.0.32"
   }
 }
