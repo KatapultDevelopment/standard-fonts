@@ -18,10 +18,18 @@
   "author": "Christopher Brown <io@henrian.com> (http://henrian.com)",
   "devDependencies": {
     "@types/node": "^10.5.1",
+    "mz": "^2.7.0",
+    "prettier": "^1.15.3",
+    "ts-node": "^7.0.1",
+    "tslint": "^5.12.0",
     "typescript": "^2.9.2"
   },
   "scripts": {
-    "prepare": "tsc -d",
-    "prepublishOnly": "find vendor -name '*.afm' | sed 's/afm$//g' | xargs -I % node parse %afm %json"
+    "parse": "ts-node scripts/parse.ts",
+    "clean": "rm vendor/Adobe/Core14/*.json",
+    "ls": "ls vendor/Adobe/Core14"
+  },
+  "dependencies": {
+    "@types/mz": "^0.0.32"
   }
 }
