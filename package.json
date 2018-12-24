@@ -4,6 +4,7 @@
   "description": "Adobe Font Metrics",
   "scripts": {
     "parse": "ts-node scripts/parse.ts",
+    "test": "ts-node src/Font.ts",
     "clean": "rm font_metrics/*.json",
     "ls": "ls font_metrics"
   },

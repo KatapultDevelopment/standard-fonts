@@ -1,7 +1,7 @@
 import * as base64 from 'base64-arraybuffer';
 import fs from 'mz/fs';
 import pako from 'pako';
-import { dirname } from 'path';
+import { basename, dirname } from 'path';
 
 import { ICharMetrics, parseCharMetricsSection } from './parseCharacterMetrics';
 import { IFontMetrics, parseFontMetricsSection } from './parseFontMetrics';
@@ -35,6 +35,12 @@ const compressJson = (json: string) => {
   return base64DeflatedJson;
 };
 
+const copyFileToSrc = async (src: string) => {
+  const fileName = basename(src);
+  const dest = dirname(__dirname) + '/src/' + fileName;
+  await (fs.copyFile as any)(src, dest);
+};
+
 const main = async () => {
   const afmFiles = await getAfmFilePaths();
 
@@ -50,6 +56,7 @@ const main = async () => {
 
     await fs.writeFile(jsonFile, jsonMetrics);
     await fs.writeFile(compressedJsonFile, compressJson(jsonMetrics));
+    await copyFileToSrc(compressedJsonFile);
   }
 };
 
