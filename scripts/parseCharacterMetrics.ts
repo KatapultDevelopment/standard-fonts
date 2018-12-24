@@ -17,32 +17,7 @@ type ICharMetricKey = keyof ICharMetrics;
 
 const byKey = (key: ICharMetricKey) => (obj) => obj.key === key;
 
-// prettier-ignore
-const parseMetric = (metric: string) => {
-  const key = takeUntilFirstSpace(metric) as ICharMetricKey;
-  const rawValue = takeAfterFirstSpace(metric);
-  return (
-      key === 'C'  ? { key, value: Number(rawValue) }
-    : key === 'WX' ? { key, value: Number(rawValue) }
-    : key === 'N'  ? { key, value: String(rawValue) }
-    : key === 'B'  ? { key, value: rawValue.split(' ').map(Number) }
-    : key === 'L'  ? { key, value: rawValue.split(' ').map(String) }
-    : error(`Unrecognized character metric key: "${key}"`)
-  );
-};
-
 /**
- * parseCharMetrics() takes a single line from the "CharMetrics" section in an
- * AFM file, and extracts the crucial metrics for that character. For example,
- * the line describing capital A in Times-Roman from Adobe's Core14 font set
- * is this:
- *
- *   C 65 ; WX 722 ; N A ; B 15 0 706 674 ;
- *
- * For which parseCharMetrics() would return a plain object:
- *
- *     { charCode: 65, width: 722, name: 'A' }
- *
  * From https://www.adobe.com/content/dam/acom/en/devnet/font/pdfs/5004.AFM_Spec.pdf :
  *
  * C integer:
@@ -69,13 +44,46 @@ const parseMetric = (metric: string) => {
  * Fallback link for AFM Spec:
  *   https://ia800603.us.archive.org/30/items/afm-format/afm-format.pdf
  */
-const parseCharMetrics = (line: string): ICharMetrics => {
+
+// prettier-ignore
+const parseMetric = (
+  // E.g. 'B 56 -45 544 651'
+  metric: string,
+) => {
+  // E.g. 'B'
+  const key = takeUntilFirstSpace(metric) as ICharMetricKey;
+
+  // E.g. '56 -45 544 651'
+  const rawValue = takeAfterFirstSpace(metric);
+  
+  return (
+      key === 'C'  ? { key, value: Number(rawValue) }
+    : key === 'WX' ? { key, value: Number(rawValue) }
+    : key === 'N'  ? { key, value: String(rawValue) }
+    : key === 'B'  ? { key, value: rawValue.split(' ').map(Number) }
+    : key === 'L'  ? { key, value: rawValue.split(' ').map(String) }
+    : error(`Unrecognized character metric key: "${key}"`)
+  );
+};
+
+const parseCharMetrics = (
+  // E.g. 'C 35 ; WX 600 ; N numbersign ; B 56 -45 544 651 ;'
+  line: string,
+): ICharMetrics => {
   const SEMICOLON_WITH_SURROUDING_WHITESPACE = /\s*;\s*/;
   const NON_EMPTY = (str) => str !== '';
 
   const metrics = line
+    // E.g. ['C 35', 'WX 600', 'N numbersign', 'B 56 -45 544 651', '']
     .split(SEMICOLON_WITH_SURROUDING_WHITESPACE)
+    // E.g. ['C 35', 'WX 600', 'N numbersign', 'B 56 -45 544 651']
     .filter(NON_EMPTY)
+    // E.g. [
+    //        { key: 'C',  value: 35 },
+    //        { key: 'WX', value: 600 },
+    //        { key: 'N',  value: 'numbersign' },
+    //        { key: 'B',  value: [56, -45, 544, 651] }
+    //      ]
     .map(parseMetric);
 
   return {

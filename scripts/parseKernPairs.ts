@@ -14,7 +14,10 @@ export type IKernPair = [string, string, number];
  * Fallback link for AFM Spec:
  *   https://ia800603.us.archive.org/30/items/afm-format/afm-format.pdf
  */
-const parseKernPair = (line: string): IKernPair => {
+const parseKernPair = (
+  // E.g. 'KPX A G -50'
+  line: string,
+): IKernPair => {
   const [, firstCharName, secondCharName, kernXAmount] = line.split(' ');
   return [String(firstCharName), String(secondCharName), Number(kernXAmount)];
 };

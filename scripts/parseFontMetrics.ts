@@ -56,8 +56,14 @@ const booleanFontMetricKeys = ['IsFixedPitch'];
 const arrayFontMetricKeys = ['FontBBox'];
 
 // prettier-ignore
-const parseFontMetric = (line: string) => {
+const parseFontMetric = (
+  // E.g. 'FontBBox -113 -250 749 801'
+  line: string,
+) => {
+  // E.g. 'FontBBox'
   const key = takeUntilFirstSpace(line) as IFontMetricKey;
+
+  // E.g. '-113 -250 749 801'
   const rawValue = takeAfterFirstSpace(line).trim();
 
   return (
