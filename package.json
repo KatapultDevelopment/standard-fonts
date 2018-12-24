@@ -1,7 +1,11 @@
 {
-  "name": "afm",
-  "version": "0.4.0",
-  "description": "Adobe Font Metrics",
+  "name": "@pdf-lib/standard-fonts",
+  "version": "0.0.0",
+  "description": "Metrics for the Standard 14 PDF fonts",
+  "main": "lib/Font.js",
+  "unpkg": "dist/standard-fonts.min.js",
+  "module": "es/Font.js",
+  "types": "lib/Font.d.ts",
   "scripts": {
     "make": "node Makefile.js",
     "lint": "node Makefile.js lint",
@@ -9,20 +13,21 @@
     "afmToJson": "node Makefile.js afmToJson",
     "test": "ts-node src/Font.ts"
   },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/chbrown/afm.git"
-  },
+  "repository": "https://github.com/Hopding/standard-fonts.git",
   "keywords": [
     "afm",
     "adobe",
     "font",
     "metrics",
-    "ascii"
+    "ascii",
+    "pdf"
   ],
-  "author": "Christopher Brown <io@henrian.com> (http://henrian.com)",
+  "author": "Andrew Dillon <andrew.dillon.j@gmail.com>",
+  "contributors": [
+    "Christopher Brown <io@henrian.com> (http://henrian.com)",
+  ],
   "license": "MIT",
-  "homepage": "https://github.com/chbrown/afm",
+  "homepage": "https://github.com/Hopding/standard-fonts",
   "dependencies": {
     "base64-arraybuffer": "^0.1.5",
     "pako": "^1.0.6"
