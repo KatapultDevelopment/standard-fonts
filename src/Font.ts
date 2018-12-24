@@ -80,7 +80,7 @@ export interface ICharMetrics {
 
 export type IKernPair = [string, string, number];
 
-class Font {
+export default class Font {
   static load = (fontName: keyof typeof fontCache): Font => {
     const cachedFont = fontCache[fontName];
     if (cachedFont) return cachedFont;

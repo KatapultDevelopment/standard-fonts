@@ -1,7 +1,8 @@
-*.js
-*.d.ts
 node_modules
 .DS_Store
 font_metrics/*.json
 src/*.json
 yarn-error.log
+lib
+es
+dist
