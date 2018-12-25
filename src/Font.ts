@@ -74,23 +74,23 @@ const decompressJson = (compressedJson: string) => {
 
 export interface ICharMetrics {
   /** Decimal value of default character code (-1 if not encoded) */
-  charCode: number;
+  C: number;
   /** Width of character */
-  width: number;
+  WX: number;
   /** Character name (aka Glyph name) */
-  name: string;
+  N: string;
   /**
    * [llx lly urx ury]:
    *   Character bounding box where llx, lly, urx, and ury are all numbers.
    */
-  bbox: [number, number, number, number];
+  B: [number, number, number, number];
   /**
    * Array<[successor ligature]>:
    *   Ligature sequence where successor and ligature are both character names.
    *   The current character may join with the character named successor to form
    *   the character named ligature.
    */
-  ligatures: Array<[string, string]>;
+  L: Array<[string, string]>;
 }
 
 /**
@@ -109,13 +109,20 @@ export default class Font {
 
     const json = decompressJson(compressedJsonForFontName[fontName]);
     const font = Object.assign(new Font(), JSON.parse(json));
-    font.CharMetrics = font.CharMetrics.map((metric) => ({
-      charCode: metric.C,
-      width: metric.WX,
-      name: metric.N,
-      bbox: metric.B,
-      ligatures: metric.L,
-    }));
+
+    font.CharWidths = font.CharMetrics.reduce((acc, metric) => {
+      acc[metric.N] = metric.WX;
+      return acc;
+    }, {});
+    font.KernPairXAmounts = font.KernPairs.reduce(
+      (acc, [name1, name2, width]) => {
+        if (!acc[name1]) acc[name1] = {};
+        acc[name1][name2] = width;
+        return acc;
+      },
+      {},
+    );
+
     fontCache[fontName] = font;
 
     return font;
@@ -145,5 +152,17 @@ export default class Font {
   CharMetrics: ICharMetrics[];
   KernPairs: IKernPair[];
 
+  private CharWidths: { [charName: string]: number };
+  private KernPairXAmounts: { [name1: string]: { [name2: string]: number } };
+
   private constructor() {}
+
+  getWidthOfChar = (charName: string): number | void =>
+    this.CharWidths[charName];
+
+  getXAmountOfKernPair = (
+    leftCharName: string,
+    rightCharName: string,
+  ): number | void =>
+    (this.KernPairXAmounts[leftCharName] || {})[rightCharName];
 }
