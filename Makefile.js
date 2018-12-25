@@ -24,6 +24,11 @@ target.afmToJson = () => {
   exec('ts-node scripts/fonts/parse.ts');
 };
 
+target.encodingsToJson = () => {
+  target.clean();
+  exec('ts-node scripts/encodings/parse.ts');
+};
+
 target.lint = () => {
   exec(`prettier --loglevel error --write "{src,scripts}/**/*.ts"`);
   exec('tslint --project ./tsconfig.json --fix "{src,scripts}/**/*.ts"');
@@ -33,12 +38,13 @@ target.clean = () => {
   rm('-rf', 'lib');
   rm('-rf', 'es');
   rm('-rf', 'dist');
-  rm('-f', 'font_metrics/*.json', 'src/*.json');
+  rm('-f', 'encoding_metrics/*.json', 'font_metrics/*.json', 'src/*.json');
 };
 
 target.compileTS = () => {
   target.clean();
   target.afmToJson();
+  target.encodingsToJson();
   exec('tsc --module CommonJS --outDir lib');
   exec('tsc --module ES2015 --outDir es');
 };
