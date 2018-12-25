@@ -1,3 +1,4 @@
+/* tslint:disable max-classes-per-file */
 import { decompressJson } from './utils';
 
 import AllEncodingsCompressed from './all-encodings.compressed.json';
@@ -16,20 +17,13 @@ const allUnicodeMappings: {
   win1252: IUnicodeMappings;
 } = JSON.parse(decompressedEncodings);
 
-export type EncodingNames = 'Symbol' | 'ZapfDingbats' | 'WinAnsi';
+type EncodingNames = 'Symbol' | 'ZapfDingbats' | 'WinAnsi';
 
-export class Encoding {
-  static Symbol = new Encoding('Symbol', allUnicodeMappings.symbol);
-  static ZapfDingbats = new Encoding(
-    'ZapfDingbats',
-    allUnicodeMappings.zapfdingbats,
-  );
-  static WinAnsi = new Encoding('WinAnsi', allUnicodeMappings.win1252);
-
+class Encoding {
   name: EncodingNames;
   private unicodeMappings: IUnicodeMappings;
 
-  private constructor(name: EncodingNames, unicodeMappings: IUnicodeMappings) {
+  constructor(name: EncodingNames, unicodeMappings: IUnicodeMappings) {
     this.name = name;
     this.unicodeMappings = unicodeMappings;
   }
@@ -47,3 +41,11 @@ export class Encoding {
     return { code: mapped[0], name: mapped[1] };
   };
 }
+
+export type IEncoding = Encoding;
+
+export const Test = {
+  Symbol: new Encoding('Symbol', allUnicodeMappings.symbol),
+  ZapfDingbats: new Encoding('ZapfDingbats', allUnicodeMappings.zapfdingbats),
+  WinAnsi: new Encoding('WinAnsi', allUnicodeMappings.win1252),
+};
