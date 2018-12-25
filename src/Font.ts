@@ -1,5 +1,4 @@
-import * as base64 from 'base64-arraybuffer';
-import pako from 'pako';
+import { decompressJson } from './utils';
 
 import CourierBoldCompressed from './Courier-Bold.compressed.json';
 import CourierBoldObliqueCompressed from './Courier-BoldOblique.compressed.json';
@@ -64,14 +63,6 @@ export type IFontNames = FontNames | keyof typeof compressedJsonForFontName;
 
 const fontCache: { [name in FontNames]?: Font } = {};
 
-const decompressJson = (compressedJson: string) => {
-  const json = String.fromCharCode.apply(
-    String,
-    pako.inflate(base64.decode(compressedJson)),
-  );
-  return json;
-};
-
 export interface ICharMetrics {
   /** Decimal value of default character code (-1 if not encoded) */
   C: number;
@@ -102,7 +93,7 @@ export interface ICharMetrics {
  */
 export type IKernPair = [string, string, number];
 
-export default class Font {
+export class Font {
   static load = (fontName: IFontNames): Font => {
     const cachedFont = fontCache[fontName];
     if (cachedFont) return cachedFont;
@@ -162,12 +153,12 @@ export default class Font {
 
   private constructor() {}
 
-  getWidthOfChar = (charName: string): number | void =>
-    this.CharWidths[charName];
+  getWidthOfGlyph = (glyphName: string): number | void =>
+    this.CharWidths[glyphName];
 
-  getXAmountOfKernPair = (
-    leftCharName: string,
-    rightCharName: string,
+  getXAxisKerningForPair = (
+    leftGlyphName: string,
+    rightGlyphName: string,
   ): number | void =>
-    (this.KernPairXAmounts[leftCharName] || {})[rightCharName];
+    (this.KernPairXAmounts[leftGlyphName] || {})[rightGlyphName];
 }

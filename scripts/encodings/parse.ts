@@ -23,6 +23,7 @@ const copyFileToSrc = async (src: string) => {
 const main = async () => {
   const parent = dirname(dirname(__dirname));
 
+  const allEncodings = {};
   for (const fontName of ['symbol', 'zapfdingbats', 'win1252']) {
     const file = `${parent}/encoding_metrics/${fontName}.txt`;
     console.log('Parsing:', file);
@@ -31,17 +32,23 @@ const main = async () => {
     const parser =
       fontName === 'win1252' ? parseWin1252 : parseZapfDingbatsOrSymbol;
     const jsonMetrics = parser(String(data));
+    allEncodings[fontName] = jsonMetrics;
 
     const json = JSON.stringify(jsonMetrics);
-    const compressedJson = compressJson(json);
 
-    const jsonFile = `${parent}/encoding_metrics/${fontName}.json`;
-    const compressedJsonFile = `${parent}/encoding_metrics/${fontName}.compressed.json`;
-
+    const jsonFile = `${parent}/encoding_metrics/${fontName}-encoding.json`;
     await fs.writeFile(jsonFile, json);
-    await fs.writeFile(compressedJsonFile, compressedJson);
-    await copyFileToSrc(compressedJsonFile);
   }
+
+  const allJson = JSON.stringify(allEncodings);
+  const allCompressedJson = compressJson(allJson);
+
+  const allJsonFile = `${parent}/encoding_metrics/all-encodings.json`;
+  const allCompressedJsonFile = `${parent}/encoding_metrics/all-encodings.compressed.json`;
+
+  await fs.writeFile(allJsonFile, allJson);
+  await fs.writeFile(allCompressedJsonFile, allCompressedJson);
+  await copyFileToSrc(allCompressedJsonFile);
 };
 
 main();

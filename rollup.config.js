@@ -6,11 +6,10 @@ import { terser } from 'rollup-plugin-terser';
 const { UGLIFY } = process.env;
 
 export default {
-  input: 'es/Font.js',
+  input: 'es/index.js',
   output: {
     name: 'StandardFonts',
     format: 'umd',
-    exports: 'named',
   },
   plugins: [
     json(),
