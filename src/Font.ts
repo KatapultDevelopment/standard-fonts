@@ -62,6 +62,8 @@ const fontCache: {
   'ZapfDingbats'?: Font;
 } = {};
 
+export const fontNames = Object.keys(fontCache);
+
 const decompressJson = (compressedJson: string) => {
   const json = String.fromCharCode.apply(
     String,
