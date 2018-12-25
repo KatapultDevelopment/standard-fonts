@@ -44,7 +44,7 @@ class Encoding {
 
 export type IEncoding = Encoding;
 
-export const Test = {
+export const Encodings = {
   Symbol: new Encoding('Symbol', allUnicodeMappings.symbol),
   ZapfDingbats: new Encoding('ZapfDingbats', allUnicodeMappings.zapfdingbats),
   WinAnsi: new Encoding('WinAnsi', allUnicodeMappings.win1252),
