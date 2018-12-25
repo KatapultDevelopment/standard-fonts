@@ -26,7 +26,7 @@ target.afmToJson = () => {
 
 target.lint = () => {
   exec(`prettier --loglevel error --write "{src,scripts}/**/*.ts"`);
-  exec('tslint --project ./tsconfig.json --fix');
+  exec('tslint --project ./tsconfig.json --fix "{src,scripts}/**/*.ts"');
 };
 
 target.clean = () => {

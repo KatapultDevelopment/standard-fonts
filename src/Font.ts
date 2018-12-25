@@ -19,50 +19,50 @@ import TimesRomanCompressed from './Times-Roman.compressed.json';
 import SymbolCompressed from './Symbol.compressed.json';
 import ZapfDingbatsCompressed from './ZapfDingbats.compressed.json';
 
+// prettier-ignore
 const compressedJsonForFontName = {
+  'Courier': CourierCompressed,
   'Courier-Bold': CourierBoldCompressed,
-  'Courier-BoldOblique': CourierBoldObliqueCompressed,
   'Courier-Oblique': CourierObliqueCompressed,
-  Courier: CourierCompressed,
+  'Courier-BoldOblique': CourierBoldObliqueCompressed,
 
+  'Helvetica': HelveticaCompressed,
   'Helvetica-Bold': HelveticaBoldCompressed,
-  'Helvetica-BoldOblique': HelveticaBoldObliqueCompressed,
   'Helvetica-Oblique': HelveticaObliqueCompressed,
-  Helvetica: HelveticaCompressed,
+  'Helvetica-BoldOblique': HelveticaBoldObliqueCompressed,
 
-  'Times-Bold': TimesBoldCompressed,
-  'Times-BoldItalic': TimesBoldItalicCompressed,
-  'Times-Italic': TimesItalicCompressed,
   'Times-Roman': TimesRomanCompressed,
+  'Times-Bold': TimesBoldCompressed,
+  'Times-Italic': TimesItalicCompressed,
+  'Times-BoldItalic': TimesBoldItalicCompressed,
 
-  Symbol: SymbolCompressed,
-
-  ZapfDingbats: ZapfDingbatsCompressed,
+  'Symbol': SymbolCompressed,
+  'ZapfDingbats': ZapfDingbatsCompressed,
 };
 
-// prettier-ignore
-const fontCache: {
-  'Courier-Bold'?: Font;
-  'Courier-BoldOblique'?: Font;
-  'Courier-Oblique'?: Font;
-  'Courier'?: Font;
+export enum FontNames {
+  Courier = 'Courier',
+  CourierBold = 'Courier-Bold',
+  CourierOblique = 'Courier-Oblique',
+  CourierBoldOblique = 'Courier-BoldOblique',
 
-  'Helvetica-Bold'?: Font;
-  'Helvetica-BoldOblique'?: Font;
-  'Helvetica-Oblique'?: Font;
-  'Helvetica'?: Font;
+  Helvetica = 'Helvetica',
+  HelveticaBold = 'HelveticaBold',
+  HelveticaOblique = 'Helvetica-Oblique',
+  HelveticaBoldOblique = 'Helvetica-BoldOblique',
 
-  'Times-Bold'?: Font;
-  'Times-BoldItalic'?: Font;
-  'Times-Italic'?: Font;
-  'Times-Roman'?: Font;
+  TimesRoman = 'Times-Roman',
+  TimesRomanBold = 'Times-Bold',
+  TimesRomanItalic = 'Times-Italic',
+  TimesRomanBoldItalic = 'Times-BoldItalic',
 
-  'Symbol'?: Font;
+  Symbol = 'Symbol',
+  ZapfDingbats = 'ZapfDingbats',
+}
 
-  'ZapfDingbats'?: Font;
-} = {};
+export type IFontNames = FontNames | keyof typeof compressedJsonForFontName;
 
-export const fontNames = Object.keys(fontCache);
+const fontCache: { [name in FontNames]?: Font } = {};
 
 const decompressJson = (compressedJson: string) => {
   const json = String.fromCharCode.apply(
@@ -83,7 +83,9 @@ export interface ICharMetrics {
 export type IKernPair = [string, string, number];
 
 export default class Font {
-  static load = (fontName: keyof typeof fontCache): Font => {
+  static readonly Names = FontNames;
+
+  static load = (fontName: IFontNames): Font => {
     const cachedFont = fontCache[fontName];
     if (cachedFont) return cachedFont;
 

@@ -10,6 +10,7 @@
     "make": "node Makefile.js",
     "lint": "node Makefile.js lint",
     "clean": "node Makefile.js clean",
+    "typecheck": "tsc --noEmit",
     "afmToJson": "node Makefile.js afmToJson",
     "test": "ts-node src/Font.ts"
   },

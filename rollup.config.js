@@ -10,6 +10,7 @@ export default {
   output: {
     name: 'StandardFonts',
     format: 'umd',
+    exports: 'named',
   },
   plugins: [
     json(),
