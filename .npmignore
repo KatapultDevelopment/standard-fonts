@@ -1,5 +1,12 @@
-*.ts
-!*.d.ts
-Makefile
+encoding_metrics
+font_metrics
+scripts
+src
+.gitignore
+.npmignore
+.prettierrc.json
+Makefile.js
+rollup.config.js
 tsconfig.json
-*.afm
+tslint.json
+yarn.lock
