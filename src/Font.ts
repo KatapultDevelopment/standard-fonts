@@ -47,7 +47,7 @@ export enum FontNames {
   CourierBoldOblique = 'Courier-BoldOblique',
 
   Helvetica = 'Helvetica',
-  HelveticaBold = 'HelveticaBold',
+  HelveticaBold = 'Helvetica-Bold',
   HelveticaOblique = 'Helvetica-Oblique',
   HelveticaBoldOblique = 'Helvetica-BoldOblique',
 
@@ -73,24 +73,49 @@ const decompressJson = (compressedJson: string) => {
 };
 
 export interface ICharMetrics {
-  C: number;
-  WX: number;
-  N: string;
-  B: [number, number, number, number];
-  L: Array<[string, string]>;
+  /** Decimal value of default character code (-1 if not encoded) */
+  charCode: number;
+  /** Width of character */
+  width: number;
+  /** Character name (aka Glyph name) */
+  name: string;
+  /**
+   * [llx lly urx ury]:
+   *   Character bounding box where llx, lly, urx, and ury are all numbers.
+   */
+  bbox: [number, number, number, number];
+  /**
+   * Array<[successor ligature]>:
+   *   Ligature sequence where successor and ligature are both character names.
+   *   The current character may join with the character named successor to form
+   *   the character named ligature.
+   */
+  ligatures: Array<[string, string]>;
 }
 
+/**
+ * [name_1 name_2 number_x]:
+ *   Name of the first character in the kerning pair followed by the name of the
+ *   second character followed by the kerning amount in the x direction
+ *   (y is zero). The kerning amount is specified in the units of the character
+ *   coordinate system.
+ */
 export type IKernPair = [string, string, number];
 
 export default class Font {
-  static readonly Names = FontNames;
-
   static load = (fontName: IFontNames): Font => {
     const cachedFont = fontCache[fontName];
     if (cachedFont) return cachedFont;
 
     const json = decompressJson(compressedJsonForFontName[fontName]);
     const font = Object.assign(new Font(), JSON.parse(json));
+    font.ICharMetrics = font.ICharMetrics.map((metric) => ({
+      charCode: metric.C,
+      width: metric.WX,
+      name: metric.N,
+      bbox: metric.B,
+      ligatures: metric.L,
+    }));
     fontCache[fontName] = font;
 
     return font;
