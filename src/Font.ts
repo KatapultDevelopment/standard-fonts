@@ -147,6 +147,11 @@ export default class Font {
   StdHW: number;
   StdVW: number;
   IsFixedPitch: boolean;
+
+  /**
+   * [llx lly urx ury]:
+   *   Font bounding box where llx, lly, urx, and ury are all numbers.
+   */
   FontBBox: [number, number, number, number];
 
   CharMetrics: ICharMetrics[];

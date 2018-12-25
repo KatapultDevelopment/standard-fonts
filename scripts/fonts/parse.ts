@@ -21,7 +21,7 @@ export const parseFontMetrics = (data: string): IMetrics => ({
 });
 
 const getAfmFilePaths = async () => {
-  const parentDir = dirname(__dirname);
+  const parentDir = dirname(dirname(__dirname));
   const files = await fs.readdir(`${parentDir}/font_metrics`);
   const afmFiles = files.filter((name) => name.includes('.afm'));
   return afmFiles.map((name) => `${parentDir}/font_metrics/${name}`);
@@ -37,7 +37,7 @@ const compressJson = (json: string) => {
 
 const copyFileToSrc = async (src: string) => {
   const fileName = basename(src);
-  const dest = dirname(__dirname) + '/src/' + fileName;
+  const dest = dirname(dirname(__dirname)) + '/src/' + fileName;
   await (fs.copyFile as any)(src, dest);
 };
 

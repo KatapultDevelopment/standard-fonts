@@ -21,7 +21,7 @@ target.all = () => {
 
 target.afmToJson = () => {
   target.clean();
-  exec('ts-node scripts/parse.ts');
+  exec('ts-node scripts/fonts/parse.ts');
 };
 
 target.lint = () => {
