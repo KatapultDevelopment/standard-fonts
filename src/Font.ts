@@ -109,7 +109,7 @@ export default class Font {
 
     const json = decompressJson(compressedJsonForFontName[fontName]);
     const font = Object.assign(new Font(), JSON.parse(json));
-    font.ICharMetrics = font.ICharMetrics.map((metric) => ({
+    font.CharMetrics = font.CharMetrics.map((metric) => ({
       charCode: metric.C,
       width: metric.WX,
       name: metric.N,
