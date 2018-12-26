@@ -10,3 +10,4 @@ rollup.config.js
 tsconfig.json
 tslint.json
 yarn.lock
+*.zip
