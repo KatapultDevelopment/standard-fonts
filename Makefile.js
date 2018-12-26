@@ -67,7 +67,9 @@ target.releaseNext = () => {
 
   target.all();
 
-  execFileSync('yarn', ['publish', '--tag', 'next'], { stdio: 'inherit' });
+  execFileSync('yarn', ['publish', '--tag', 'next', '--access', 'public'], {
+    stdio: 'inherit',
+  });
 };
 
 // Extra confirmation to avoid accidental releases to @latest
@@ -103,7 +105,9 @@ target.releaseLatest = async () => {
     return;
   }
 
-  execFileSync('yarn', ['publish', '--tag', 'latest'], { stdio: 'inherit' });
+  execFileSync('yarn', ['publish', '--tag', 'latest', '--access', 'public'], {
+    stdio: 'inherit',
+  });
 
   const tagName = `v${packageJson.version}`;
   exec(`git commit -am 'Bump version to ${packageJson.version}'`);

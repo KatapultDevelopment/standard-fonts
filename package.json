@@ -13,7 +13,8 @@
     "typecheck": "tsc --noEmit",
     "afmToJson": "node Makefile.js afmToJson",
     "encodingsToJson": "node Makefile.js encodingsToJson",
-    "test": "ts-node src/test.ts"
+    "releaseNext": "node Makefile.js releaseNext",
+    "releaseLatest": "node Makefile.js releaseLatest"
   },
   "repository": "https://github.com/Hopding/standard-fonts.git",
   "keywords": [
