@@ -65,7 +65,7 @@ const fontCache: { [name in FontNames]?: Font } = {};
 
 export interface ICharMetrics {
   /** Decimal value of default character code (-1 if not encoded) */
-  C: number;
+  // C: number;
   /** Width of character */
   WX: number;
   /** Character name (aka Glyph name) */
@@ -74,14 +74,14 @@ export interface ICharMetrics {
    * [llx lly urx ury]:
    *   Character bounding box where llx, lly, urx, and ury are all numbers.
    */
-  B: [number, number, number, number];
+  // B: [number, number, number, number];
   /**
    * Array<[successor ligature]>:
    *   Ligature sequence where successor and ligature are both character names.
    *   The current character may join with the character named successor to form
    *   the character named ligature.
    */
-  L: Array<[string, string]>;
+  // L: Array<[string, string]>;
 }
 
 /**

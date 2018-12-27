@@ -86,12 +86,13 @@ const parseCharMetrics = (
     //      ]
     .map(parseMetric);
 
+  // We'll leave out C, B, and L to save space in the resulting JSON
   return {
-    C: metrics.find(byKey('C')).value,
+    // C: metrics.find(byKey('C')).value,
     WX: metrics.find(byKey('WX')).value,
     N: metrics.find(byKey('N')).value,
-    B: metrics.find(byKey('B')).value,
-    L: metrics.filter(byKey('L')).map((l) => l.value),
+    // B: metrics.find(byKey('B')).value,
+    // L: metrics.filter(byKey('L')).map((l) => l.value),
   } as ICharMetrics;
 };
 
