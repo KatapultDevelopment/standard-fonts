@@ -74,7 +74,7 @@ export interface ICharMetrics {
    * [llx lly urx ury]:
    *   Character bounding box where llx, lly, urx, and ury are all numbers.
    */
-  // B: [number, number, number, number];
+  B: [number, number, number, number];
   /**
    * Array<[successor ligature]>:
    *   Ligature sequence where successor and ligature are both character names.
@@ -93,18 +93,37 @@ export interface ICharMetrics {
  */
 export type IKernPair = [string, string, number];
 
+/**
+ * A glyph's bounding box, i.e. the rectangle that encloses the glyph
+ * outline as tightly as possible.
+ */
+export interface IBoundingBox {
+  x: number /** The minimum X position in the bounding box */;
+  y: number /** The minimum Y position in the bounding box */;
+  width: number /** The width of the bounding box */;
+  height: number /** The height of the bounding box */;
+}
+
 export class Font {
   static load = (fontName: IFontNames): Font => {
     const cachedFont = fontCache[fontName];
     if (cachedFont) return cachedFont;
 
     const json = decompressJson(compressedJsonForFontName[fontName]);
-    const font = Object.assign(new Font(), JSON.parse(json));
+    const font: Font = Object.assign(new Font(), JSON.parse(json));
 
     font.CharWidths = font.CharMetrics.reduce((acc, metric) => {
       acc[metric.N] = metric.WX;
       return acc;
     }, {});
+
+    font.BoundingBoxes = font.CharMetrics.reduce((acc, metric) => {
+      const [llx, lly, urx, ury] = metric.B;
+      const rect = { x: llx, y: lly, width: urx - llx, height: ury - lly };
+      acc[metric.N] = rect;
+      return acc;
+    }, {});
+
     font.KernPairXAmounts = font.KernPairs.reduce(
       (acc, [name1, name2, width]) => {
         if (!acc[name1]) acc[name1] = {};
@@ -149,12 +168,16 @@ export class Font {
   KernPairs: IKernPair[];
 
   private CharWidths: { [charName: string]: number };
+  private BoundingBoxes: { [charName: string]: IBoundingBox };
   private KernPairXAmounts: { [name1: string]: { [name2: string]: number } };
 
   private constructor() {}
 
-  getWidthOfGlyph = (glyphName: string): number | void =>
+  getWidthOfGlyph = (glyphName: string): number | undefined =>
     this.CharWidths[glyphName];
+
+  getBoundingBoxOfGlyph = (glyphName: string): IBoundingBox | undefined =>
+    this.BoundingBoxes[glyphName];
 
   getXAxisKerningForPair = (
     leftGlyphName: string,
