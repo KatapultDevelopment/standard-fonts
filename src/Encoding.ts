@@ -19,7 +19,7 @@ const allUnicodeMappings: {
 
 type EncodingNames = 'Symbol' | 'ZapfDingbats' | 'WinAnsi';
 
-class Encoding {
+class EncodingClass {
   name: EncodingNames;
   supportedCodePoints: number[];
   private unicodeMappings: UnicodeMappings;
@@ -46,8 +46,13 @@ class Encoding {
   };
 }
 
+export type Encoding = EncodingClass;
+
 export const Encodings = {
-  Symbol: new Encoding('Symbol', allUnicodeMappings.symbol),
-  ZapfDingbats: new Encoding('ZapfDingbats', allUnicodeMappings.zapfdingbats),
-  WinAnsi: new Encoding('WinAnsi', allUnicodeMappings.win1252),
+  Symbol: new EncodingClass('Symbol', allUnicodeMappings.symbol),
+  ZapfDingbats: new EncodingClass(
+    'ZapfDingbats',
+    allUnicodeMappings.zapfdingbats,
+  ),
+  WinAnsi: new EncodingClass('WinAnsi', allUnicodeMappings.win1252),
 };
