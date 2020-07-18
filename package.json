@@ -1,6 +1,6 @@
 {
   "name": "@pdf-lib/standard-fonts",
-  "version": "1.0.0-rc1",
+  "version": "1.0.0-rc2",
   "description": "Metrics for the Standard 14 PDF fonts and their encodings",
   "main": "lib/index.js",
   "unpkg": "dist/standard-fonts.min.js",

@@ -7,24 +7,28 @@ const decompressedEncodings = decompressJson(AllEncodingsCompressed);
 
 type EncodingCharCode = number;
 type EncodingCharName = string;
-interface IUnicodeMappings {
+interface UnicodeMappings {
   [unicodeCodePoint: number]: [EncodingCharCode, EncodingCharName];
 }
 
 const allUnicodeMappings: {
-  symbol: IUnicodeMappings;
-  zapfdingbats: IUnicodeMappings;
-  win1252: IUnicodeMappings;
+  symbol: UnicodeMappings;
+  zapfdingbats: UnicodeMappings;
+  win1252: UnicodeMappings;
 } = JSON.parse(decompressedEncodings);
 
 type EncodingNames = 'Symbol' | 'ZapfDingbats' | 'WinAnsi';
 
 class Encoding {
   name: EncodingNames;
-  private unicodeMappings: IUnicodeMappings;
+  supportedCodePoints: number[];
+  private unicodeMappings: UnicodeMappings;
 
-  constructor(name: EncodingNames, unicodeMappings: IUnicodeMappings) {
+  constructor(name: EncodingNames, unicodeMappings: UnicodeMappings) {
     this.name = name;
+    this.supportedCodePoints = Object.keys(unicodeMappings)
+      .map(Number)
+      .sort((a, b) => a - b);
     this.unicodeMappings = unicodeMappings;
   }
 
@@ -41,8 +45,6 @@ class Encoding {
     return { code: mapped[0], name: mapped[1] };
   };
 }
-
-export type IEncoding = Encoding;
 
 export const Encodings = {
   Symbol: new Encoding('Symbol', allUnicodeMappings.symbol),
