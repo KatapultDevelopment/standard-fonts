@@ -63,3 +63,11 @@ const arrayToString = (array: Uint8Array) => {
 
 export const decompressJson = (compressedJson: string): string =>
   arrayToString(pako.inflate(decodeFromBase64(compressedJson)));
+
+export const padStart = (value: string, length: number, padChar: string) => {
+  let padding = '';
+  for (let idx = 0, len = length - value.length; idx < len; idx++) {
+    padding += padChar;
+  }
+  return padding + value;
+};

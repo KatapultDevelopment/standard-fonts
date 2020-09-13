@@ -1,5 +1,5 @@
 /* tslint:disable max-classes-per-file */
-import { decompressJson } from './utils';
+import { decompressJson, padStart } from './utils';
 
 import AllEncodingsCompressed from './all-encodings.compressed.json';
 
@@ -19,7 +19,7 @@ const allUnicodeMappings: {
 
 type EncodingNames = 'Symbol' | 'ZapfDingbats' | 'WinAnsi';
 
-class EncodingClass {
+class Encoding {
   name: EncodingNames;
   supportedCodePoints: number[];
   private unicodeMappings: UnicodeMappings;
@@ -39,20 +39,18 @@ class EncodingClass {
     const mapped = this.unicodeMappings[codePoint];
     if (!mapped) {
       const str = String.fromCharCode(codePoint);
-      const msg = `${this.name} cannot encode "${str}"`;
+      const hexCode = `0x${padStart(codePoint.toString(16), 4, '0')}`;
+      const msg = `${this.name} cannot encode "${str}" (${hexCode})`;
       throw new Error(msg);
     }
     return { code: mapped[0], name: mapped[1] };
   };
 }
 
-export type Encoding = EncodingClass;
+export type EncodingType = Encoding;
 
 export const Encodings = {
-  Symbol: new EncodingClass('Symbol', allUnicodeMappings.symbol),
-  ZapfDingbats: new EncodingClass(
-    'ZapfDingbats',
-    allUnicodeMappings.zapfdingbats,
-  ),
-  WinAnsi: new EncodingClass('WinAnsi', allUnicodeMappings.win1252),
+  Symbol: new Encoding('Symbol', allUnicodeMappings.symbol),
+  ZapfDingbats: new Encoding('ZapfDingbats', allUnicodeMappings.zapfdingbats),
+  WinAnsi: new Encoding('WinAnsi', allUnicodeMappings.win1252),
 };
