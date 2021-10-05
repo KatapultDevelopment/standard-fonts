@@ -1,4 +1,4 @@
-import { decompressJson } from './utils';
+import { decompressJson } from './utils.js';
 import CourierBoldCompressed from './Courier-Bold.compressed.json' assert { type: "json" };
 import CourierBoldObliqueCompressed from './Courier-BoldOblique.compressed.json' assert { type: "json" };
 import CourierObliqueCompressed from './Courier-Oblique.compressed.json' assert { type: "json" };
