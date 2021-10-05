@@ -9,7 +9,7 @@
  *     Licensed under the MIT license.
  *
  */
-import pako from 'pako';
+import * as pako from '@progress/pako-esm';
 
 const chars =
   'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
