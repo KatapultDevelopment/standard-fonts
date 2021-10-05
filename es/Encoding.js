@@ -1,6 +1,6 @@
 /* tslint:disable max-classes-per-file */
 import { decompressJson, padStart } from './utils.js';
-import AllEncodingsCompressed from './all-encodings.compressed.json' assert { type: "json" };
+import AllEncodingsCompressed from './all-encodings.compressed.json';
 var decompressedEncodings = decompressJson(AllEncodingsCompressed);
 var allUnicodeMappings = JSON.parse(decompressedEncodings);
 var Encoding = /** @class */ (function () {

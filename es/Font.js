@@ -1,18 +1,18 @@
 import { decompressJson } from './utils.js';
-import CourierBoldCompressed from './Courier-Bold.compressed.json' assert { type: "json" };
-import CourierBoldObliqueCompressed from './Courier-BoldOblique.compressed.json' assert { type: "json" };
-import CourierObliqueCompressed from './Courier-Oblique.compressed.json' assert { type: "json" };
-import CourierCompressed from './Courier.compressed.json' assert { type: "json" };
-import HelveticaBoldCompressed from './Helvetica-Bold.compressed.json' assert { type: "json" };
-import HelveticaBoldObliqueCompressed from './Helvetica-BoldOblique.compressed.json' assert { type: "json" };
-import HelveticaObliqueCompressed from './Helvetica-Oblique.compressed.json' assert { type: "json" };
-import HelveticaCompressed from './Helvetica.compressed.json' assert { type: "json" };
-import TimesBoldCompressed from './Times-Bold.compressed.json' assert { type: "json" };
-import TimesBoldItalicCompressed from './Times-BoldItalic.compressed.json' assert { type: "json" };
-import TimesItalicCompressed from './Times-Italic.compressed.json' assert { type: "json" };
-import TimesRomanCompressed from './Times-Roman.compressed.json' assert { type: "json" };
-import SymbolCompressed from './Symbol.compressed.json' assert { type: "json" };
-import ZapfDingbatsCompressed from './ZapfDingbats.compressed.json' assert { type: "json" };
+import CourierBoldCompressed from './Courier-Bold.compressed.js';
+import CourierBoldObliqueCompressed from './Courier-BoldOblique.compressed.js';
+import CourierObliqueCompressed from './Courier-Oblique.compressed.js';
+import CourierCompressed from './Courier.compressed.js';
+import HelveticaBoldCompressed from './Helvetica-Bold.compressed.js';
+import HelveticaBoldObliqueCompressed from './Helvetica-BoldOblique.compressed.js';
+import HelveticaObliqueCompressed from './Helvetica-Oblique.compressed.js';
+import HelveticaCompressed from './Helvetica.compressed.js';
+import TimesBoldCompressed from './Times-Bold.compressed.js';
+import TimesBoldItalicCompressed from './Times-BoldItalic.compressed.js';
+import TimesItalicCompressed from './Times-Italic.compressed.js';
+import TimesRomanCompressed from './Times-Roman.compressed.js';
+import SymbolCompressed from './Symbol.compressed.js';
+import ZapfDingbatsCompressed from './ZapfDingbats.compressed.js';
 // prettier-ignore
 var compressedJsonForFontName = {
     'Courier': CourierCompressed,
