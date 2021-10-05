@@ -1,22 +1,22 @@
-import { decompressJson } from './utils.js';
+import { decompressJson } from './utils';
 
-import CourierBoldCompressed from './Courier-Bold.compressed.json' assert { type: "json" };
-import CourierBoldObliqueCompressed from './Courier-BoldOblique.compressed.json' assert { type: "json" };
-import CourierObliqueCompressed from './Courier-Oblique.compressed.json' assert { type: "json" };
-import CourierCompressed from './Courier.compressed.json' assert { type: "json" };
+import CourierBoldCompressed from './Courier-Bold.compressed.json';
+import CourierBoldObliqueCompressed from './Courier-BoldOblique.compressed.json';
+import CourierObliqueCompressed from './Courier-Oblique.compressed.json';
+import CourierCompressed from './Courier.compressed.json';
 
-import HelveticaBoldCompressed from './Helvetica-Bold.compressed.json' assert { type: "json" };
-import HelveticaBoldObliqueCompressed from './Helvetica-BoldOblique.compressed.json' assert { type: "json" };
-import HelveticaObliqueCompressed from './Helvetica-Oblique.compressed.json' assert { type: "json" };
-import HelveticaCompressed from './Helvetica.compressed.json' assert { type: "json" };
+import HelveticaBoldCompressed from './Helvetica-Bold.compressed.json';
+import HelveticaBoldObliqueCompressed from './Helvetica-BoldOblique.compressed.json';
+import HelveticaObliqueCompressed from './Helvetica-Oblique.compressed.json';
+import HelveticaCompressed from './Helvetica.compressed.json';
 
-import TimesBoldCompressed from './Times-Bold.compressed.json' assert { type: "json" };
-import TimesBoldItalicCompressed from './Times-BoldItalic.compressed.json' assert { type: "json" };
-import TimesItalicCompressed from './Times-Italic.compressed.json' assert { type: "json" };
-import TimesRomanCompressed from './Times-Roman.compressed.json' assert { type: "json" };
+import TimesBoldCompressed from './Times-Bold.compressed.json';
+import TimesBoldItalicCompressed from './Times-BoldItalic.compressed.json';
+import TimesItalicCompressed from './Times-Italic.compressed.json';
+import TimesRomanCompressed from './Times-Roman.compressed.json';
 
-import SymbolCompressed from './Symbol.compressed.json' assert { type: "json" };
-import ZapfDingbatsCompressed from './ZapfDingbats.compressed.json' assert { type: "json" };
+import SymbolCompressed from './Symbol.compressed.json';
+import ZapfDingbatsCompressed from './ZapfDingbats.compressed.json';
 
 // prettier-ignore
 const compressedJsonForFontName = {

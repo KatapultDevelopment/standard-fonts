@@ -1,6 +1,6 @@
 import * as base64 from 'base64-arraybuffer';
 import fs from 'mz/fs';
-import pako from 'pako';
+import * as pako from '@progress/pako-esm';
 import { basename, dirname } from 'path';
 
 import { ICharMetrics, parseCharMetricsSection } from './parseCharacterMetrics';
